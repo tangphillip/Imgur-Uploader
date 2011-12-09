@@ -346,7 +346,7 @@
 				<key>ActionParameters</key>
 				<dict>
 					<key>COMMAND_STRING</key>
-					<string>apikey="b3625162d3418ac51a9ee805b1840452"
+					<string>apikey="c6dfd9804321a48c23774593891b4376"
 
 for file in "$@"
 do
@@ -571,33 +571,33 @@ done</string>
 	</array>
 	<key>connectors</key>
 	<dict>
-		<key>49330980-D676-4377-8CCE-EA80383400F6</key>
+		<key>30D4A7FA-AD79-4762-AF3F-003FC0366CA8</key>
 		<dict>
 			<key>from</key>
 			<string>E10B7F93-5BFA-4753-BA4E-254483D0A142 - E10B7F93-5BFA-4753-BA4E-254483D0A142</string>
 			<key>to</key>
 			<string>964A68DE-07CC-4588-86A4-EBE96124ABC6 - 964A68DE-07CC-4588-86A4-EBE96124ABC6</string>
 		</dict>
-		<key>953DC275-9E43-451B-8746-9E5473501947</key>
+		<key>7A05A7E7-DFA5-4207-8404-7E8FD8DF7764</key>
 		<dict>
 			<key>from</key>
 			<string>964A68DE-07CC-4588-86A4-EBE96124ABC6 - 964A68DE-07CC-4588-86A4-EBE96124ABC6</string>
 			<key>to</key>
 			<string>3BA35C7C-2B4E-4687-88DE-8F06363FB967 - 3BA35C7C-2B4E-4687-88DE-8F06363FB967</string>
 		</dict>
-		<key>C2E90140-B4A7-474E-B094-BFBA0D997128</key>
-		<dict>
-			<key>from</key>
-			<string>F2EC430F-4DF9-4F6B-8EB9-D246D9343B8C - F2EC430F-4DF9-4F6B-8EB9-D246D9343B8C</string>
-			<key>to</key>
-			<string>E10B7F93-5BFA-4753-BA4E-254483D0A142 - E10B7F93-5BFA-4753-BA4E-254483D0A142</string>
-		</dict>
-		<key>E5F3B381-0C83-48B5-9C29-88C2B19F0570</key>
+		<key>A59F55DB-FC75-49A5-85D7-18F59BB27B17</key>
 		<dict>
 			<key>from</key>
 			<string>3BA35C7C-2B4E-4687-88DE-8F06363FB967 - 3BA35C7C-2B4E-4687-88DE-8F06363FB967</string>
 			<key>to</key>
 			<string>B0446848-7E83-4E2B-891D-01A52F97849A - B0446848-7E83-4E2B-891D-01A52F97849A</string>
+		</dict>
+		<key>B01D65AF-4387-4443-A657-122A2BAC1821</key>
+		<dict>
+			<key>from</key>
+			<string>F2EC430F-4DF9-4F6B-8EB9-D246D9343B8C - F2EC430F-4DF9-4F6B-8EB9-D246D9343B8C</string>
+			<key>to</key>
+			<string>E10B7F93-5BFA-4753-BA4E-254483D0A142 - E10B7F93-5BFA-4753-BA4E-254483D0A142</string>
 		</dict>
 	</dict>
 	<key>variables</key>

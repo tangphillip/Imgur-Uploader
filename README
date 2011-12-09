@@ -4,7 +4,7 @@ Upload to Imgur.workflow
 
 	Installing to OS X:
 
-	1. Copy the workflow to ~/Library/Services/ or /Library/Services .
+	1. Double-click on the service to install it.
 	2. If you want, create a hotkey for the upload service in
 	   System Preferences -> Keyboard -> Keyboard Shortcuts -> Services.
 
@@ -32,10 +32,10 @@ imgur
 
 
 Maintainer:   Phil Tang <tangphillip@gmail.com>
-Last Change:  2011 Dec 09, v1.5
+Last Change:  2011 Dec 09, v1.6
 License:      Creative Commons Attribution 3.0 Unported
-Release Note: v1.5:   Added an OS X workflow for hotkeying the upload
-              v1.1:   Added a flag to disable clipboard access
-              v1.0:   Initial release
+Release Note: v1.6: Got a unique API key for these utilities.
+              v1.5: Added an OS X workflow for hotkeying the upload
+              v1.1: Added a flag to disable clipboard access
+              v1.0: Initial release
 Credits:      Bart Nagel <bart@tremby.net>
-

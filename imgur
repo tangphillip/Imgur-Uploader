@@ -4,9 +4,8 @@
 # Based the work of Bart Nagel <bart@tremby.net>
 # Shared with a Creative Commons Attribution 3.0 Unported License.
 
-# API Key provided by Alan@imgur.com
-# If you have rate limit issues, get your own at http://api.imgur.com/
-apikey="b3625162d3418ac51a9ee805b1840452"
+# If you have rate limit issues, get your own key at http://api.imgur.com/
+apikey="c6dfd9804321a48c23774593891b4376"
 CLIPBOARD=true
 
 # function to output usage instructions
