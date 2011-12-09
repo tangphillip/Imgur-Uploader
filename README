@@ -1,0 +1,11 @@
+A bash script for OS X and Linux that uploads an image to imgur and copies 
+the image URL to the clipboard.
+
+Usage: imgur <filename>
+  
+  Imgur will print the URL, and put the delete page's URL on stderr. If
+  you're on a Mac or have xsel/xclip, the image URL will also be copied
+  to the clipboard.
+
+Prerequisite: curl
+    Optional: pbcopy (included in OS X), xsel, or xclip
