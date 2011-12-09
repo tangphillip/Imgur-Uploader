@@ -7,14 +7,13 @@
 # API Key provided by Alan@imgur.com
 # If you have rate limit issues, get your own at http://api.imgur.com/
 apikey="b3625162d3418ac51a9ee805b1840452"
+CLIPBOARD=true
 
 # function to output usage instructions
 function usage {
 	echo "Usage: $(basename $0) <filename>
-Upload an image to imgur and output its new URL to stdout. Its delete page is
-output to stderr.
-If xsel or xclip is available, the URL is put on the X selection for easy
-pasting." >&2
+Upload an image to imgur, print its URL to stdout, and print the delete page URL to stderr.
+If you're on a Mac or have xsel/xclip, copy the image URL to the clipboard." >&2
 }
 
 # check API key has been entered
@@ -24,12 +23,17 @@ if [ "$apikey" = "Your API key" ]; then
 fi
 
 # check arguments
-if [ "$1" = "-h" -o "$1" = "--help" ]; then
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then
 	usage
 	exit 0
-elif [ $# -ne 1 ]; then
+elif [[ "$1" == "-x" || "$1" == "--no-clipboard" ]]; then
+  CLIPBOARD=false
+  shift
+fi
+
+if [ $# -ne 1 ]; then
 	if [ $# == 0 ]; then
-		echo "No file specified" >&2
+		echo "No file specified." >&2
 	else
 		echo "Unexpected arguments" >&2
 	fi
@@ -67,11 +71,9 @@ echo $url
 echo "Delete page: $deleteurl" >&2
 
 # put the URL on the clipboard if we have xsel or xclip
-if [ $DISPLAY ]; then
+if [ $DISPLAY -a $CLIPBOARD == true ]; then
 	{ which pbcopy >/dev/null 2>/dev/null && echo -n $url | pbcopy; } \
         || { which xsel >/dev/null 2>/dev/null && echo -n $url | xsel; } \
             || { which xclip >/dev/null 2>/dev/null && echo -n $url | xclip; } \
             || echo "Haven't copied to the clipboard: no pbcopy, xsel, or xclip" >&2
-else
-	echo "Haven't copied to the clipboard: no \$DISPLAY" >&2
 fi
