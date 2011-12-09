@@ -1,28 +1,11 @@
 #!/bin/bash
 
-# imgur script by Bart Nagel <bart@tremby.net>
-# version 2
-# I release this as public domain. Do with it what you will.
-
-# Required: curl
-#
-# Optional: xsel or xclip for automatically putting the URL on the X selection
-# for easy pasting
-#
-# Instructions:
-# Put it somewhere in your path and maybe rename it:
-# 	mv ~/Downloads/imgur.sh ~/bin/imgur
-# Make it executable:
-# 	chmod +x ~/bin/imgur
-# Stick your API key in the top:
-# 	vim ~/bin/imgur
-# Upload an image:
-# 	imgur images/hilarious/manfallingover.jpg
-# The URL will be displayed (and the delete page's URL will be displayed on
-# stderr). If you have xsel or xclip the URL will also be put on the X
-# selection, which you can usually paste with a middle click.
+# imgur script by Phil Tang <tangphillip@gmail.com>
+# Based the work of Bart Nagel <bart@tremby.net>
+# Shared with a Creative Commons Attribution 3.0 Unported License.
 
 # API Key provided by Alan@imgur.com
+# If you have rate limit issues, get your own at http://api.imgur.com/
 apikey="b3625162d3418ac51a9ee805b1840452"
 
 # function to output usage instructions
