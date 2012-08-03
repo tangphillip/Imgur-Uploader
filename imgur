@@ -61,6 +61,9 @@ elif [ $(echo $response | grep -c "<error_msg>") -gt 0 ]; then
 	echo "Error message from imgur:" >&2
 	echo $response | sed -E 's/.*<error_msg>(.*)<\/error_msg>.*/\1/' >&2
 	exit 3
+elif [[ "$response" != *original_image* ]]; then
+    echo "Unknown Failure: Imgur is probably down for maintenance."
+    exit 4
 fi
 
 # parse the response and output our stuff
