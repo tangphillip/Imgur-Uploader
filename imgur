@@ -75,7 +75,7 @@ echo "Delete page: $deleteurl" >&2
 # put the URL on the clipboard if we have xsel or xclip
 if [ $DISPLAY -a $CLIPBOARD == true ]; then
 	{ which pbcopy >/dev/null 2>/dev/null && echo -n $url | pbcopy; } \
-        || { which xsel >/dev/null 2>/dev/null && echo -n $url | xsel; } \
-            || { which xclip >/dev/null 2>/dev/null && echo -n $url | xclip; } \
+        || { which xsel >/dev/null 2>/dev/null && echo -n $url | xsel --clipboard; } \
+            || { which xclip >/dev/null 2>/dev/null && echo -n $url | xclip -selection clipboard; } \
             || echo "Haven't copied to the clipboard: no pbcopy, xsel, or xclip" >&2
 fi
