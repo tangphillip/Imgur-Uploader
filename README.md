@@ -36,7 +36,7 @@ Prerequisite: `curl`
 </tr>
 <tr>
     <th>Last Change:</th>
-    <td> 2014 Oct 17, v2.1</td>
+    <td> 2016 Jan 24, v3.0</td>
 </tr>
 <tr>
     <th>License:</th>
@@ -44,7 +44,8 @@ Prerequisite: `curl`
 </tr>
 <tr>
     <th>Release Notes:</th>
-    <td> v2.1: Replaced Growl notifications with OS X's
+    <td> v3.0: Imgur API v3 support, and fixed a clipboard copy bug with the command-line tool
+        <br>v2.1: Replaced Growl notifications with OS X's
         <br> v2.0: Much better error checking, and the OS X service has a new Growl alert for when the upload fails.
         <br> v1.6: Got a unique API key for these utilities.
         <br> v1.5: Added an OS X workflow for hotkeying the upload
