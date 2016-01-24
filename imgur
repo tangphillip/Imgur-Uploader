@@ -26,8 +26,8 @@ if [[ "$1" == "-h" || "$1" == "--help" ]]; then
 	usage
 	exit 0
 elif [[ "$1" == "-x" || "$1" == "--no-clipboard" ]]; then
-  CLIPBOARD=false
-  shift
+	CLIPBOARD=false
+	shift
 fi
 
 if [ $# -ne 1 ]; then
@@ -65,8 +65,8 @@ elif [ $(echo $response | grep -c "<error_msg>") -gt 0 ]; then
 	echo $response | sed -E 's/.*<error_msg>(.*)<\/error_msg>.*/\1/' >&2
 	exit 3
 elif [[ "$response" != *deletehash* ]]; then
-    echo "Unknown Failure: Imgur is probably down for maintenance."
-    exit 4
+	echo "Unknown Failure: Imgur is probably down for maintenance."
+	exit 4
 fi
 
 # parse the response and output our stuff
@@ -78,7 +78,7 @@ echo "Delete page: $deleteurl" >&2
 # put the URL on the clipboard if we have xsel or xclip
 if [ $CLIPBOARD == true ]; then
 	{ which pbcopy &>/dev/null && echo -n $url | pbcopy; } \
-        || { which xsel &>/dev/null && echo -n $url | xsel --clipboard; } \
-        || { which xclip &>/dev/null && echo -n $url | xclip -selection clipboard; } \
-        || echo "Haven't copied to the clipboard: no pbcopy, xsel, or xclip" >&2
+		|| { which xsel &>/dev/null && echo -n $url | xsel --clipboard; } \
+		|| { which xclip &>/dev/null && echo -n $url | xclip -selection clipboard; } \
+		|| echo "Haven't copied to the clipboard: no pbcopy, xsel, or xclip" >&2
 fi
