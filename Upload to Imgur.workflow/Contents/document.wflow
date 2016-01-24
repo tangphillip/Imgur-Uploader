@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>AMApplicationBuild</key>
-	<string>381</string>
+	<string>419</string>
 	<key>AMApplicationVersion</key>
-	<string>2.4</string>
+	<string>2.6</string>
 	<key>AMDocumentVersion</key>
 	<string>2</string>
 	<key>actions</key>
@@ -111,7 +111,7 @@
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>421.000000:826.000000</string>
+				<string>309.000000:176.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Set Value of Variable.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>
@@ -167,34 +167,38 @@
 				<key>ActionParameters</key>
 				<dict>
 					<key>COMMAND_STRING</key>
-					<string>apikey="c6dfd9804321a48c23774593891b4376"
+					<string>CLIENT_ID="9657b96ca0b7f38"
 
 for file in "$@"
 do
-  # upload the image
-  response=$(curl -F "key=$apikey" -H "Expect: " -F "image=@$file" \
-  	http://imgur.com/api/upload.xml 2&gt;/dev/null)
-  # the "Expect: " header is to get around a problem when using this through the
-  # Squid proxy. Not sure if it's a Squid bug or what.
-  if [ $? -ne 0 ]; then
-  	echo "Upload failed" &gt;&amp;2
-  	exit
-  elif [ $(echo $response | grep -c "&lt;error_msg&gt;") -gt 0 ]; then
-  	echo "Error message from imgur:" &gt;&amp;2
-  	echo $response | sed -E 's/.*&lt;error_msg&gt;(.*)&lt;\/error_msg&gt;.*/\1/' &gt;&amp;2
-  	exit
-  elif [[ "$response" != *original_image* ]]; then
-    echo "Unknown Failure: Imgur is probably down for maintenance." &gt;&amp;2
-    exit
-  fi
+	# upload the image
+	# the "Expect: " header is to get around a problem when using this through
+	# the Squid proxy. Not sure if it's a Squid bug or what.
+	response=$(curl \
+		-H "Authorization: Client-ID $CLIENT_ID" \
+		-H "Expect: " \
+		-F "image=@$1" \
+		https://api.imgur.com/3/image 2&gt;/dev/null)
+	if [ $? -ne 0 ]; then
+		echo "Upload failed" &gt;&amp;2
+		exit 2
+	elif [ $(echo $response | grep -c "&lt;error_msg&gt;") -gt 0 ]; then
+		echo "Error message from imgur:" &gt;&amp;2
+		echo $response | sed -E 's/.*&lt;error_msg&gt;(.*)&lt;\/error_msg&gt;.*/\1/' &gt;&amp;2
+		exit 3
+	elif [[ "$response" != *deletehash* ]]; then
+		echo "Unknown Failure: Imgur is probably down for maintenance."
+		exit 4
+	fi
 
-  # parse the response and output the URL
-  url=$(echo $response | sed -E 's/.*&lt;original_image&gt;(.*)&lt;\/original_image&gt;.*/\1/')
-  echo $url
+	# parse the response and output our stuff
+	url=$(echo $response | sed -E 's/.*"link":"([^"]+)".*/\1/' | sed "s|\\\\/|/|g")
+	
+	echo $url
 
-  # I'm not really sure what to do with the delete URLs.
-  # deleteurl=$(echo $response | sed -E 's/.*&lt;delete_page&gt;(.*)&lt;\/delete_page&gt;.*/\1/')
-  # echo "Delete page: $deleteurl" &gt;&amp;2
+	# I'm not really sure what to do with the delete URLs.
+	# deleteurl=$(echo $response | sed -E 's/.*"deletehash":"([^"]+)".*/\1/' | sed "s|^|http://imgur.com/delete/|")
+	# echo "Delete page: $deleteurl" &gt;&amp;2
 done</string>
 					<key>CheckedForUserDefaultShell</key>
 					<true/>
@@ -312,7 +316,7 @@ done</string>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>421.000000:722.000000</string>
+				<string>309.000000:780.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run Shell Script.action/Contents/Resources/English.lproj/main.nib</string>
 			</dict>
@@ -389,116 +393,6 @@ done</string>
 				<key>arguments</key>
 				<dict/>
 			</dict>
-		</dict>
-		<dict>
-			<key>action</key>
-			<dict>
-				<key>AMAccepts</key>
-				<dict>
-					<key>Container</key>
-					<string>List</string>
-					<key>Optional</key>
-					<true/>
-					<key>Types</key>
-					<array>
-						<string>*</string>
-					</array>
-				</dict>
-				<key>AMActionVersion</key>
-				<string>v.1.0.2</string>
-				<key>AMApplication</key>
-				<array>
-					<string>Automator</string>
-				</array>
-				<key>AMParameterProperties</key>
-				<dict>
-					<key>variableUUID</key>
-					<dict>
-						<key>isPathPopUp</key>
-						<false/>
-						<key>selectedVariableUUID</key>
-						<string>834E9A52-8536-42BC-90C6-084860F24098</string>
-					</dict>
-				</dict>
-				<key>AMProvides</key>
-				<dict>
-					<key>Container</key>
-					<string>List</string>
-					<key>Types</key>
-					<array>
-						<string>*</string>
-					</array>
-				</dict>
-				<key>AMRequiredResources</key>
-				<array/>
-				<key>ActionBundlePath</key>
-				<string>/System/Library/Automator/Get Value of Variable.action</string>
-				<key>ActionName</key>
-				<string>Get Value of Variable</string>
-				<key>ActionParameters</key>
-				<dict>
-					<key>variableUUID</key>
-					<string>834E9A52-8536-42BC-90C6-084860F24098</string>
-				</dict>
-				<key>BundleIdentifier</key>
-				<string>com.apple.Automator.Get_Value_of_Variable</string>
-				<key>CFBundleVersion</key>
-				<string>1.0.2</string>
-				<key>CanShowSelectedItemsWhenRun</key>
-				<false/>
-				<key>CanShowWhenRun</key>
-				<true/>
-				<key>Category</key>
-				<array>
-					<string>AMCategoryUtilities</string>
-				</array>
-				<key>Class Name</key>
-				<string>Get_Value_of_Variable</string>
-				<key>IgnoresInput</key>
-				<true/>
-				<key>InputUUID</key>
-				<string>B039D843-F934-4A48-B9CC-B5A689334A31</string>
-				<key>Keywords</key>
-				<array>
-					<string>variable</string>
-					<string>binding</string>
-					<string>input</string>
-					<string>output</string>
-					<string>storage</string>
-				</array>
-				<key>OutputUUID</key>
-				<string>90C41FB4-8F84-4347-AA0E-35DFE92227B7</string>
-				<key>UUID</key>
-				<string>5303E206-A318-4786-8FD0-3DCD1F3A452E</string>
-				<key>UnlocalizedApplications</key>
-				<array>
-					<string>Automator</string>
-				</array>
-				<key>arguments</key>
-				<dict>
-					<key>0</key>
-					<dict>
-						<key>default value</key>
-						<string></string>
-						<key>name</key>
-						<string>variableUUID</string>
-						<key>required</key>
-						<string>0</string>
-						<key>type</key>
-						<string>0</string>
-						<key>uuid</key>
-						<string>0</string>
-					</dict>
-				</dict>
-				<key>isViewVisible</key>
-				<true/>
-				<key>location</key>
-				<string>421.000000:473.000000</string>
-				<key>nibPath</key>
-				<string>/System/Library/Automator/Get Value of Variable.action/Contents/Resources/Base.lproj/main.nib</string>
-			</dict>
-			<key>isViewVisible</key>
-			<true/>
 		</dict>
 		<dict>
 			<key>action</key>
@@ -597,9 +491,119 @@ end run</string>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>421.000000:370.000000</string>
+				<string>309.000000:1092.000000</string>
 				<key>nibPath</key>
-				<string>/System/Library/Automator/Run AppleScript.action/Contents/Resources/English.lproj/main.nib</string>
+				<string>/System/Library/Automator/Run AppleScript.action/Contents/Resources/Base.lproj/main.nib</string>
+			</dict>
+			<key>isViewVisible</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>action</key>
+			<dict>
+				<key>AMAccepts</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Optional</key>
+					<true/>
+					<key>Types</key>
+					<array>
+						<string>*</string>
+					</array>
+				</dict>
+				<key>AMActionVersion</key>
+				<string>v.1.0.2</string>
+				<key>AMApplication</key>
+				<array>
+					<string>Automator</string>
+				</array>
+				<key>AMParameterProperties</key>
+				<dict>
+					<key>variableUUID</key>
+					<dict>
+						<key>isPathPopUp</key>
+						<false/>
+						<key>selectedVariableUUID</key>
+						<string>834E9A52-8536-42BC-90C6-084860F24098</string>
+					</dict>
+				</dict>
+				<key>AMProvides</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Types</key>
+					<array>
+						<string>com.apple.cocoa.path</string>
+					</array>
+				</dict>
+				<key>AMRequiredResources</key>
+				<array/>
+				<key>ActionBundlePath</key>
+				<string>/System/Library/Automator/Get Value of Variable.action</string>
+				<key>ActionName</key>
+				<string>Get Value of Variable</string>
+				<key>ActionParameters</key>
+				<dict>
+					<key>variableUUID</key>
+					<string>834E9A52-8536-42BC-90C6-084860F24098</string>
+				</dict>
+				<key>BundleIdentifier</key>
+				<string>com.apple.Automator.Get_Value_of_Variable</string>
+				<key>CFBundleVersion</key>
+				<string>1.0.2</string>
+				<key>CanShowSelectedItemsWhenRun</key>
+				<false/>
+				<key>CanShowWhenRun</key>
+				<true/>
+				<key>Category</key>
+				<array>
+					<string>AMCategoryUtilities</string>
+				</array>
+				<key>Class Name</key>
+				<string>Get_Value_of_Variable</string>
+				<key>IgnoresInput</key>
+				<true/>
+				<key>InputUUID</key>
+				<string>B039D843-F934-4A48-B9CC-B5A689334A31</string>
+				<key>Keywords</key>
+				<array>
+					<string>variable</string>
+					<string>binding</string>
+					<string>input</string>
+					<string>output</string>
+					<string>storage</string>
+				</array>
+				<key>OutputUUID</key>
+				<string>90C41FB4-8F84-4347-AA0E-35DFE92227B7</string>
+				<key>UUID</key>
+				<string>5303E206-A318-4786-8FD0-3DCD1F3A452E</string>
+				<key>UnlocalizedApplications</key>
+				<array>
+					<string>Automator</string>
+				</array>
+				<key>arguments</key>
+				<dict>
+					<key>0</key>
+					<dict>
+						<key>default value</key>
+						<string></string>
+						<key>name</key>
+						<string>variableUUID</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>0</string>
+					</dict>
+				</dict>
+				<key>isViewVisible</key>
+				<true/>
+				<key>location</key>
+				<string>309.000000:1195.000000</string>
+				<key>nibPath</key>
+				<string>/System/Library/Automator/Get Value of Variable.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>
 			<key>isViewVisible</key>
 			<true/>
@@ -607,33 +611,33 @@ end run</string>
 	</array>
 	<key>connectors</key>
 	<dict>
-		<key>20516AC9-FE47-424C-8E08-35C87C5FC402</key>
+		<key>1A4520A1-A951-40E7-ABE6-67C70D190E15</key>
+		<dict>
+			<key>from</key>
+			<string>B0446848-7E83-4E2B-891D-01A52F97849A - B0446848-7E83-4E2B-891D-01A52F97849A</string>
+			<key>to</key>
+			<string>0C356123-2CC0-40FF-85F6-FBE89A7EB05A - 0C356123-2CC0-40FF-85F6-FBE89A7EB05A</string>
+		</dict>
+		<key>46FE4F64-1AF8-4E56-95B6-4923A87EEEB3</key>
 		<dict>
 			<key>from</key>
 			<string>3BA35C7C-2B4E-4687-88DE-8F06363FB967 - 3BA35C7C-2B4E-4687-88DE-8F06363FB967</string>
 			<key>to</key>
 			<string>B0446848-7E83-4E2B-891D-01A52F97849A - B0446848-7E83-4E2B-891D-01A52F97849A</string>
 		</dict>
-		<key>3455CC49-0EA8-4E17-8D7B-D1BBA17D9A3C</key>
-		<dict>
-			<key>from</key>
-			<string>B0446848-7E83-4E2B-891D-01A52F97849A - B0446848-7E83-4E2B-891D-01A52F97849A</string>
-			<key>to</key>
-			<string>5303E206-A318-4786-8FD0-3DCD1F3A452E - 5303E206-A318-4786-8FD0-3DCD1F3A452E</string>
-		</dict>
-		<key>AC56F5F1-1AF6-43AD-B514-D66E4C5F538D</key>
-		<dict>
-			<key>from</key>
-			<string>5303E206-A318-4786-8FD0-3DCD1F3A452E - 5303E206-A318-4786-8FD0-3DCD1F3A452E</string>
-			<key>to</key>
-			<string>0C356123-2CC0-40FF-85F6-FBE89A7EB05A - 0C356123-2CC0-40FF-85F6-FBE89A7EB05A</string>
-		</dict>
-		<key>B345CEA6-24DE-4D75-922D-68D7CF05C702</key>
+		<key>65F0FFE0-3EC9-4E69-BF41-7DD834D4225E</key>
 		<dict>
 			<key>from</key>
 			<string>953EDC5A-9609-4229-AE71-9102B6A1712F - 953EDC5A-9609-4229-AE71-9102B6A1712F</string>
 			<key>to</key>
 			<string>3BA35C7C-2B4E-4687-88DE-8F06363FB967 - 3BA35C7C-2B4E-4687-88DE-8F06363FB967</string>
+		</dict>
+		<key>6C48A04D-08D1-43DA-BCC5-43FED9FA4130</key>
+		<dict>
+			<key>from</key>
+			<string>0C356123-2CC0-40FF-85F6-FBE89A7EB05A - 0C356123-2CC0-40FF-85F6-FBE89A7EB05A</string>
+			<key>to</key>
+			<string>5303E206-A318-4786-8FD0-3DCD1F3A452E - 5303E206-A318-4786-8FD0-3DCD1F3A452E</string>
 		</dict>
 	</dict>
 	<key>variables</key>
