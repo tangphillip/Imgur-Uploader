@@ -10,9 +10,10 @@ CLIPBOARD=true
 
 # function to output usage instructions
 function usage {
-	echo "Usage: $(basename "$0") <filenames>
-Upload an image to imgur, print its URL to stdout, and print the delete page URL to stderr.
-If you're on a Mac or have xsel/xclip, copy the image URL to the clipboard." >&2
+	echo "Usage: $(basename "$0") [filenames]
+Upload images to imgur, print their URLs to stdout, and print the delete pages URL to stderr.
+If you're on a Mac or have xsel/xclip, copy the images URLs to the clipboard.
+If you don't especify any filename, they will be read from standard input." >&2
 }
 
 function upload_image {
@@ -48,35 +49,28 @@ elif [[ "$1" == "-x" || "$1" == "--no-clipboard" ]]; then
 	shift
 fi
 
-if [ $# -lt 1 ]; then
-	if [ $# == 0 ]; then
-		echo "No file specified." >&2
-	else
-		echo "Unexpected arguments" >&2
-	fi
-	usage
-	exit 16
-elif [ ! -f "$1" ]; then
-	echo "File \"$1\" not found" >&2
-	exit 1
-fi
-
 # check curl is available
 which curl &>/dev/null || {
 	echo "Couln't find curl, which is required." >&2
 	exit 17
 }
 
-# get list of files from arguments
+# get list of files either from arguments or standard input
 files_to_upload=""
-while [[ $# -gt 0 ]]; do
-	if [ -z "$files_to_upload" ]; then
-		files_to_upload="$1"
-	else
-		files_to_upload="$files_to_upload"$'\n'"$1"
-	fi
-	shift
-done
+
+if [[ $# -gt 0 ]]; then
+	while [[ $# -gt 0 ]]; do
+		if [ -z "$files_to_upload" ]; then
+			files_to_upload="$1"
+		else
+			files_to_upload="$files_to_upload"$'\n'"$1"
+		fi
+		shift
+	done
+else
+	# I know, I know...
+	files_to_upload=$(cat)
+fi
 
 
 # handle filenames with spaces gracefully
