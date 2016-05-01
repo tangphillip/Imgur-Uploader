@@ -10,7 +10,7 @@ CLIPBOARD=true
 
 # function to output usage instructions
 function usage {
-	echo "Usage: $(basename "$0") <filename>
+	echo "Usage: $(basename "$0") <filenames>
 Upload an image to imgur, print its URL to stdout, and print the delete page URL to stderr.
 If you're on a Mac or have xsel/xclip, copy the image URL to the clipboard." >&2
 }
@@ -48,7 +48,7 @@ elif [[ "$1" == "-x" || "$1" == "--no-clipboard" ]]; then
 	shift
 fi
 
-if [ $# -ne 1 ]; then
+if [ $# -lt 1 ]; then
 	if [ $# == 0 ]; then
 		echo "No file specified." >&2
 	else
@@ -67,33 +67,65 @@ which curl &>/dev/null || {
 	exit 17
 }
 
+# get list of files from arguments
+files_to_upload=""
+while [[ $# -gt 0 ]]; do
+	if [ -z "$files_to_upload" ]; then
+		files_to_upload="$1"
+	else
+		files_to_upload="$files_to_upload"$'\n'"$1"
+	fi
+	shift
+done
 
-# upload the image
-response=$(upload_image "$1" "$CLIENT_ID")
 
-# verify the upload
-if [ $? -ne 0 ]; then
-	echo "Upload failed" >&2
-	exit 2
-elif [ "$(echo "$response" | grep -c "<error_msg>")" -gt 0 ]; then
-	echo "Error message from imgur:" >&2
-	echo "$response" | sed -E 's/.*<error_msg>(.*)<\/error_msg>.*/\1/' >&2
-	exit 3
-elif [[ "$response" != *deletehash* ]]; then
-	echo "Unknown Failure: Imgur is probably down for maintenance."
-	exit 4
-fi
+# handle filenames with spaces gracefully
+# sadly, it will croak when a filename has a newline
+# then again, it's kinda users fault on that case
+ifs_old=$IFS
+IFS=$'\n'
 
-# parse the response and output our stuff
-url=$(parse_url_from_response "$response")
-deleteurl=$(parse_delete_url_from_response "$response")
-echo "$url"
-echo "Delete page: $deleteurl" >&2
+# upload the images one at a time
+list_urls=""
+for file in $files_to_upload; do
+	response=$(upload_image "$file" "$CLIENT_ID")
+
+	# verify the upload
+	# this stops the batch operation, which seems the best course of action
+	# since the script has such detailed error levels
+	if [ $? -ne 0 ]; then
+		echo "Upload failed" >&2
+		exit 2
+	elif [ "$(echo "$response" | grep -c "<error_msg>")" -gt 0 ]; then
+		echo "Error message from imgur:" >&2
+		echo "$response" | sed -E 's/.*<error_msg>(.*)<\/error_msg>.*/\1/' >&2
+		exit 3
+	elif [[ "$response" != *deletehash* ]]; then
+		echo "Unknown Failure: Imgur is probably down for maintenance."
+		exit 4
+	fi
+
+	# parse the response and output our stuff
+	url=$(parse_url_from_response "$response")
+	deleteurl=$(parse_delete_url_from_response "$response")
+
+	# add the url to the list for later clipboard manipulation
+	# avoid adding a trailing newline at the end
+	if [ -z "$list_urls" ]; then
+		list_urls="$url"
+	else
+		list_urls="$list_urls"$'\n'"$url"
+	fi
+
+	echo "$url"
+	echo "Delete page: $deleteurl" >&2
+done
+IFS=$ifs_old
 
 # put the URL on the clipboard if we have xsel or xclip
 if [ $CLIPBOARD == true ]; then
-	{ which pbcopy &>/dev/null && echo -n "$url" | pbcopy; } \
-		|| { which xsel &>/dev/null && echo -n "$url" | xsel --input --clipboard; } \
-		|| { which xclip &>/dev/null && echo -n "$url" | xclip -selection clipboard; } \
+	{ which pbcopy &>/dev/null && echo -n "$list_urls" | pbcopy; } \
+		|| { which xsel &>/dev/null && echo -n "$list_urls" | xsel --input --clipboard; } \
+		|| { which xclip &>/dev/null && echo -n "$list_urls" | xclip -selection clipboard; } \
 		|| echo "Haven't copied to the clipboard: no pbcopy, xsel, or xclip" >&2
 fi
