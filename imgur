@@ -1,7 +1,8 @@
 #!/bin/bash
 
-# imgur script by Phil Tang <tangphillip@gmail.com>
-# Based the work of Bart Nagel <bart@tremby.net>
+# imgur script by ShyWest <https://github.com/ShyWest>
+# Based on Phil Tang's work <tangphillip@gmail.com>
+# Which in turn is based on Bart Nagel's work <bart@tremby.net>
 # Shared with a Creative Commons Attribution 3.0 Unported License.
 
 # If you have rate limit issues, get your own key at http://api.imgur.com/
