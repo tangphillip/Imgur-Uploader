@@ -15,6 +15,24 @@ Upload an image to imgur, print its URL to stdout, and print the delete page URL
 If you're on a Mac or have xsel/xclip, copy the image URL to the clipboard." >&2
 }
 
+function upload_image {
+	# the "Expect: " header is to get around a problem when using this through the
+	# Squid proxy. Not sure if it's a Squid bug or what.
+	curl \
+		-H "Authorization: Client-ID $CLIENT_ID" \
+		-H "Expect: " \
+		-F "image=@$1" \
+		https://api.imgur.com/3/image 2>/dev/null
+}
+
+function parse_url_from_response {
+	echo "$1" | sed -E 's/.*"link":"([^"]+)".*/\1/' | sed "s|\\\\/|/|g"
+}
+
+function parse_delete_url_from_response {
+	echo "$1" | sed -E 's/.*"deletehash":"([^"]+)".*/\1/' | sed "s|^|http://imgur.com/delete/|"
+}
+
 # check API key has been entered
 if [ "$CLIENT_ID" = "Your Client ID" ]; then
 	echo "You first need to edit the script and put your API key in the variable near the top." >&2
@@ -49,14 +67,11 @@ which curl &>/dev/null || {
 	exit 17
 }
 
+
 # upload the image
-# the "Expect: " header is to get around a problem when using this through the
-# Squid proxy. Not sure if it's a Squid bug or what.
-response=$(curl \
-	-H "Authorization: Client-ID $CLIENT_ID" \
-	-H "Expect: " \
-	-F "image=@$1" \
-	https://api.imgur.com/3/image 2>/dev/null)
+response=$(upload_image "$1" "$CLIENT_ID")
+
+# verify the upload
 if [ $? -ne 0 ]; then
 	echo "Upload failed" >&2
 	exit 2
@@ -70,8 +85,8 @@ elif [[ "$response" != *deletehash* ]]; then
 fi
 
 # parse the response and output our stuff
-url=$(echo "$response" | sed -E 's/.*"link":"([^"]+)".*/\1/' | sed "s|\\\\/|/|g")
-deleteurl=$(echo "$response" | sed -E 's/.*"deletehash":"([^"]+)".*/\1/' | sed "s|^|http://imgur.com/delete/|")
+url=$(parse_url_from_response "$response")
+deleteurl=$(parse_delete_url_from_response "$response")
 echo "$url"
 echo "Delete page: $deleteurl" >&2
 
