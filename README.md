@@ -40,7 +40,7 @@ Prerequisite: `curl`
 </tr>
 <tr>
     <th>License:</th>
-    <td> Creative Commons Attribution 3.0 Unported</td>
+    <td>MIT</td>
 </tr>
 <tr>
     <th>Release Notes:</th>
