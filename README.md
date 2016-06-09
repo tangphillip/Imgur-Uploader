@@ -32,11 +32,11 @@ Prerequisite: `curl`
 <table>
 <tr>
     <th>Maintainer:</th>
-    <td> Phil Tang &lt;tangphillip@gmail.com&gt;</td>
+    <td>Phil Tang &lt;tangphillip@gmail.com&gt;</td>
 </tr>
 <tr>
     <th>Last Change:</th>
-    <td> 2016 Jan 24, v3.0</td>
+    <td>2016 Jun 8, v3.1</td>
 </tr>
 <tr>
     <th>License:</th>
@@ -44,7 +44,8 @@ Prerequisite: `curl`
 </tr>
 <tr>
     <th>Release Notes:</th>
-    <td> v3.0: Imgur API v3 support, and fixed a clipboard copy bug with the command-line tool
+    <td> 3.1: Supports multiple-image upload through the script. Also fixed a bug with xsel.
+        <br>v3.0: Imgur API v3 support, and fixed a clipboard copy bug with the command-line tool
         <br>v2.1: Replaced Growl notifications with OS X's
         <br> v2.0: Much better error checking, and the OS X service has a new Growl alert for when the upload fails.
         <br> v1.6: Got a unique API key for these utilities.
