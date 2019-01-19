@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>AMApplicationBuild</key>
-	<string>419</string>
+	<string>444.39</string>
 	<key>AMApplicationVersion</key>
-	<string>2.6</string>
+	<string>2.9</string>
 	<key>AMDocumentVersion</key>
 	<string>2</string>
 	<key>actions</key>
@@ -61,7 +61,7 @@
 					<string>834E9A52-8536-42BC-90C6-084860F24098</string>
 				</dict>
 				<key>BundleIdentifier</key>
-				<string>com.apple.Automator.Set_Value_of_Variable</string>
+				<string>com.apple.Automator.SetValueofVariable</string>
 				<key>CFBundleVersion</key>
 				<string>1.0.2</string>
 				<key>CanShowSelectedItemsWhenRun</key>
@@ -111,7 +111,7 @@
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>309.000000:176.000000</string>
+				<string>649.000000:228.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Set Value of Variable.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>
@@ -316,9 +316,9 @@ done</string>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>309.000000:780.000000</string>
+				<string>649.000000:784.000000</string>
 				<key>nibPath</key>
-				<string>/System/Library/Automator/Run Shell Script.action/Contents/Resources/English.lproj/main.nib</string>
+				<string>/System/Library/Automator/Run Shell Script.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>
 			<key>isViewVisible</key>
 			<true/>
@@ -491,7 +491,7 @@ end run</string>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>309.000000:1092.000000</string>
+				<string>649.000000:1094.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run AppleScript.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>
@@ -534,7 +534,7 @@ end run</string>
 					<string>List</string>
 					<key>Types</key>
 					<array>
-						<string>com.apple.cocoa.path</string>
+						<string>com.apple.cocoa.string</string>
 					</array>
 				</dict>
 				<key>AMRequiredResources</key>
@@ -549,7 +549,7 @@ end run</string>
 					<string>834E9A52-8536-42BC-90C6-084860F24098</string>
 				</dict>
 				<key>BundleIdentifier</key>
-				<string>com.apple.Automator.Get_Value_of_Variable</string>
+				<string>com.apple.Automator.GetValueofVariable</string>
 				<key>CFBundleVersion</key>
 				<string>1.0.2</string>
 				<key>CanShowSelectedItemsWhenRun</key>
@@ -601,7 +601,7 @@ end run</string>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>309.000000:1195.000000</string>
+				<string>649.000000:1196.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Get Value of Variable.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>
@@ -611,33 +611,33 @@ end run</string>
 	</array>
 	<key>connectors</key>
 	<dict>
-		<key>1A4520A1-A951-40E7-ABE6-67C70D190E15</key>
+		<key>0B68C85B-F81D-484E-96AD-277800A6F262</key>
 		<dict>
 			<key>from</key>
-			<string>B0446848-7E83-4E2B-891D-01A52F97849A - B0446848-7E83-4E2B-891D-01A52F97849A</string>
-			<key>to</key>
 			<string>0C356123-2CC0-40FF-85F6-FBE89A7EB05A - 0C356123-2CC0-40FF-85F6-FBE89A7EB05A</string>
-		</dict>
-		<key>46FE4F64-1AF8-4E56-95B6-4923A87EEEB3</key>
-		<dict>
-			<key>from</key>
-			<string>3BA35C7C-2B4E-4687-88DE-8F06363FB967 - 3BA35C7C-2B4E-4687-88DE-8F06363FB967</string>
 			<key>to</key>
-			<string>B0446848-7E83-4E2B-891D-01A52F97849A - B0446848-7E83-4E2B-891D-01A52F97849A</string>
+			<string>5303E206-A318-4786-8FD0-3DCD1F3A452E - 5303E206-A318-4786-8FD0-3DCD1F3A452E</string>
 		</dict>
-		<key>65F0FFE0-3EC9-4E69-BF41-7DD834D4225E</key>
+		<key>3ED7D960-A8BD-47F8-BD61-AE5D43672CD5</key>
 		<dict>
 			<key>from</key>
 			<string>953EDC5A-9609-4229-AE71-9102B6A1712F - 953EDC5A-9609-4229-AE71-9102B6A1712F</string>
 			<key>to</key>
 			<string>3BA35C7C-2B4E-4687-88DE-8F06363FB967 - 3BA35C7C-2B4E-4687-88DE-8F06363FB967</string>
 		</dict>
-		<key>6C48A04D-08D1-43DA-BCC5-43FED9FA4130</key>
+		<key>612FC424-D52D-4B1C-87BF-E0AD0F4459B7</key>
 		<dict>
 			<key>from</key>
-			<string>0C356123-2CC0-40FF-85F6-FBE89A7EB05A - 0C356123-2CC0-40FF-85F6-FBE89A7EB05A</string>
+			<string>B0446848-7E83-4E2B-891D-01A52F97849A - B0446848-7E83-4E2B-891D-01A52F97849A</string>
 			<key>to</key>
-			<string>5303E206-A318-4786-8FD0-3DCD1F3A452E - 5303E206-A318-4786-8FD0-3DCD1F3A452E</string>
+			<string>0C356123-2CC0-40FF-85F6-FBE89A7EB05A - 0C356123-2CC0-40FF-85F6-FBE89A7EB05A</string>
+		</dict>
+		<key>CCBD827A-061E-4F2D-BBB7-59AFF0A09C9C</key>
+		<dict>
+			<key>from</key>
+			<string>3BA35C7C-2B4E-4687-88DE-8F06363FB967 - 3BA35C7C-2B4E-4687-88DE-8F06363FB967</string>
+			<key>to</key>
+			<string>B0446848-7E83-4E2B-891D-01A52F97849A - B0446848-7E83-4E2B-891D-01A52F97849A</string>
 		</dict>
 	</dict>
 	<key>variables</key>
@@ -653,11 +653,27 @@ end run</string>
 	</array>
 	<key>workflowMetaData</key>
 	<dict>
+		<key>applicationBundleIDsByPath</key>
+		<dict/>
+		<key>applicationPaths</key>
+		<array/>
+		<key>inputTypeIdentifier</key>
+		<string>com.apple.Automator.fileSystemObject.image</string>
+		<key>outputTypeIdentifier</key>
+		<string>com.apple.Automator.nothing</string>
+		<key>presentationMode</key>
+		<integer>15</integer>
+		<key>processesInput</key>
+		<integer>0</integer>
 		<key>serviceInputTypeIdentifier</key>
 		<string>com.apple.Automator.fileSystemObject.image</string>
 		<key>serviceOutputTypeIdentifier</key>
 		<string>com.apple.Automator.nothing</string>
 		<key>serviceProcessesInput</key>
+		<integer>0</integer>
+		<key>systemImageName</key>
+		<string>NSActionTemplate</string>
+		<key>useAutomaticInputType</key>
 		<integer>0</integer>
 		<key>workflowTypeIdentifier</key>
 		<string>com.apple.Automator.servicesMenu</string>
