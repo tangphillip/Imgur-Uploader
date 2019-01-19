@@ -177,7 +177,7 @@ do
 	response=$(curl \
 		-H "Authorization: Client-ID $CLIENT_ID" \
 		-H "Expect: " \
-		-F "image=@$1" \
+		-F "image=@$file" \
 		https://api.imgur.com/3/image 2&gt;/dev/null)
 	if [ $? -ne 0 ]; then
 		echo "Upload failed" &gt;&amp;2
