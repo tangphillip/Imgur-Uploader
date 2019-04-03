@@ -92,7 +92,7 @@ fi
 
 # handle filenames with spaces gracefully
 # sadly, it will croak when a filename has a newline
-# then again, it's kinda users fault on that case
+# then again, it's kinda the user's fault in that case
 ifs_old=$IFS
 IFS=$'\n'
 
@@ -133,7 +133,7 @@ for file in $files_to_upload; do
 done
 IFS=$ifs_old
 
-# put the URL on the clipboard if we have xsel or xclip
+# put the URL on the clipboard if we have pbcopy, xsel, or xclip
 if [ $CLIPBOARD == true ]; then
 	{ which pbcopy &>/dev/null && echo -n "$list_urls" | pbcopy; } \
 		|| { which xsel &>/dev/null && echo -n "$list_urls" | xsel --input --clipboard; } \
